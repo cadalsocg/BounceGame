@@ -1,4 +1,2 @@
-# C-ROS
-ROS projects in C++ 
-
-Some other projects in C++ as well
+# Bounce-Game  
+Bounce game similar to Pong written in C++
