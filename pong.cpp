@@ -30,16 +30,20 @@ class Pong {
         int barrierX, barrierY, barrierL;
         int sleepTime;
 
-        //Best way to use wide characters in Linux is to just use a String
+        //Best way to use wide characters in Linux is to use a String
         const string CHAR_WALL_H = "━";
         const string CHAR_WALL_V = "┃";
+        const string CHAR_TL_CORNER = "┏";
+        const string CHAR_TR_CORNER = "┓";
+        const string CHAR_BL_CORNER = "┗";
+        const string CHAR_BR_CORNER = "┛";
         const string CHAR_BALL = "●";
         const string CHAR_PADDLE = "▀";
         const string CHAR_BARRIER = "▒";
-        //const char CHAR_WALL    ='#'; // ¦? 
-        //onst char CHAR_PADDLE    = '_';
-        //const char CHAR_BALL    = 'o'; // - 
-        //const char CHAR_BARRIER = 'x';  // ¦?
+        //const unsigned char CHAR_WALL    ='#'; // ¦? 
+        //onst unsigned char CHAR_PADDLE    = '_';
+        //const unsigned char CHAR_BALL    = 'o'; // - 
+        //const unsigned char CHAR_BARRIER = 'x';  // ¦?
 
         void barrier() {
             barrierL = rand() % 5 + 2; // Barrier length between 2 and 6
@@ -81,8 +85,17 @@ class Pong {
 
             for(int i = 0; i < rows; i++) {
                 for(int j = 0; j < cols; j++) {
-                    // Walls: if the row or column is at the border
-                    if(i == 0 || i == rows - 1)
+                    // Corners: top-left, top-right, bottom-left, bottom-right
+                    if (i == 0 && j == 0)
+                        cout << WALL << CHAR_TL_CORNER << RESET;
+                    else if(i == 0 && j == cols - 1)
+                        cout << WALL << CHAR_TR_CORNER << RESET;
+                    else if(i == rows - 1 && j == 0)
+                        cout << WALL << CHAR_BL_CORNER << RESET;
+                    else if(i == rows - 1 && j == cols - 1)
+                        cout << WALL << CHAR_BR_CORNER << RESET;
+                    // Walls: if the row or column is at the border    
+                    else if(i == 0 || i == rows - 1 )
                         cout << WALL << CHAR_WALL_H << RESET;
                     else if (j == 0 || j == cols - 1)
                         cout << WALL << CHAR_WALL_V << RESET;
