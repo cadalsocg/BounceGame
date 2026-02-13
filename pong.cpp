@@ -32,6 +32,7 @@ char readKey();
 void enableRawMode();
 void disableRawMode();
 
+//Manages the Pong game state, rendering, and collision logic
 class Pong {
     private:
         int rows, cols;
@@ -51,14 +52,12 @@ class Pong {
         const string CHAR_BALL = "●";
         const string CHAR_PADDLE = "▀";
         const string CHAR_BARRIER = "▒";
-        //const unsigned char CHAR_WALL    ='#'; // ¦? 
-        //onst unsigned char CHAR_PADDLE    = '_';
-        //const unsigned char CHAR_BALL    = 'o'; // - 
-        //const unsigned char CHAR_BARRIER = 'x';  // ¦?
 
         void barrier() {
             barrierL = rand() % 5 + 2; // Barrier length between 2 and 6
+             // Barrier spawns within the walls and 3-units from the edges
 			barrierX = rand() % (cols - barrierL - 6) + 3; 
+            // Barrier spawns within the walls and 3-units from the edges, and above the paddle
 			barrierY = rand() % (rows - barrierL - 8) + 3; 
         }
 
@@ -68,7 +67,7 @@ class Pong {
             this->rows = rows;
             this->cols = cols;
             score = 0;
-            sleepTime = 300;
+            sleepTime = 300; // Controls the speed of the ball, greater there is, the slower
             paddleX = cols / 2;
             velPaddle = 2;
 			ballX = rand() % (cols - 2) + 1; 
@@ -76,7 +75,7 @@ class Pong {
             velX = 1;
             velY = 1;
             barrier();
-            cout << "\033[?25l"; // Hide cursor, this stops the flickering
+            cout << "\033[?25l"; // Hide cursor
         }
        
         ~Pong() {
@@ -136,6 +135,7 @@ class Pong {
             else if (key == 'd' || key == 'D')
                 paddleX += velPaddle;
 
+            // Ensure paddle stays within the walls (1 unit from each wall)
             if (paddleX < 1) paddleX = 1;
             if (paddleX > cols - 3) paddleX = cols - 3;
 }
@@ -159,7 +159,7 @@ class Pong {
                 }
         }
 
-        // Paddle collision
+        // Paddle collision: Checks if the ball's next position overlaps with the paddle coordinates
         if (nextY == rows - 2 && (nextX == paddleX || nextX == paddleX + 1)) {
             velY = -velY;
             score++;
@@ -204,7 +204,7 @@ int main() {
 
     Pong game(playerName, N, M); 
 
-    clearScreen(); // To clear the console from previous outputs, use clear for Linux, cls for Windows
+    clearScreen(); // To clear the console from previous outputs
     enableRawMode();
 
     while (true) {
@@ -234,15 +234,17 @@ char readKey() {
 }
 
 void enableRawMode() {
-    tcgetattr(STDIN_FILENO, &orig_termios);
+    tcgetattr(STDIN_FILENO, &orig_termios); //Save original terminal settings
 
     termios raw = orig_termios;
+    //Disable canonical mode(waits for Enter) and echoing(prints pressed keys to screen)
     raw.c_lflag &= ~(ICANON | ECHO);
+    // Set read and read timeout to 0 for non-blocking input
     raw.c_cc[VMIN] = 0;
     raw.c_cc[VTIME] = 0;
 
-    tcsetattr(STDIN_FILENO, TCSANOW, &raw);
-    fcntl(STDIN_FILENO, F_SETFL, O_NONBLOCK);
+    tcsetattr(STDIN_FILENO, TCSANOW, &raw); // Apply raw mod settings right now
+    fcntl(STDIN_FILENO, F_SETFL, O_NONBLOCK); // Set keyboard to non-blocking mode
 }
 
 void disableRawMode() {
