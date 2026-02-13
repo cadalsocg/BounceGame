@@ -1,3 +1,14 @@
+/* Cristian Cadalso & Kamren Freitag
+Pong Game: Console-based Pong game for single player implemented in C++ for Debian/Ubuntu based Linux systems.
+Features:
+- Player controls a paddle at the bottom of the screen using 'A' (left) and 'D' (right) keys.
+- A ball bounces around the screen, and the player must prevent it from falling past the paddle.
+- A barrier is randomly placed on the screen, which the ball can bounce off of.
+- The game ends when the ball falls past the paddle, and the player's score is displayed.
+EE245: Robotics and Programming Algorithms, Spring 2026, MNSU
+Date: 02/12/2026
+*/
+
 #include <iostream>
 #include <string>
 #include <unistd.h>
