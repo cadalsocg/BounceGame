@@ -57,7 +57,7 @@ class Pong {
             this->rows = rows;
             this->cols = cols;
             score = 0;
-            sleepTime = 240;
+            sleepTime = 300;
             paddleX = cols / 2;
             velPaddle = 2;
 			ballX = rand() % (cols - 2) + 1; 
@@ -179,7 +179,7 @@ int main() {
     int N, M;
 
     cout << "Enter Player Name: ";
-    cin >> playerName;
+    getline(cin, playerName);
     
     while(true) { 
         cout << "Input the Grid Size for the Barrier: ";
