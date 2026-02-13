@@ -1,4 +1,4 @@
-/* Cristian Cadalso & Kamren Freitag
+/* Cristian Cadalso
 Pong Game: Console-based Pong game for single player implemented in C++ for Debian/Ubuntu based Linux systems.
 Features:
 - Player controls a paddle at the bottom of the screen using 'A' (left) and 'D' (right) keys.
@@ -42,7 +42,8 @@ class Pong {
         int barrierX, barrierY, barrierL;
         int sleepTime;
 
-        //Best way to use wide characters in Linux is to use a String
+        //Best way to use wide characters in Linux is to use a String. 
+		//Use escape sequences if not displaying character correctly
         const string CHAR_WALL_H = "━";
         const string CHAR_WALL_V = "┃";
         const string CHAR_TL_CORNER = "┏";
@@ -51,7 +52,7 @@ class Pong {
         const string CHAR_BR_CORNER = "┛";
         const string CHAR_BALL = "●";
         const string CHAR_PADDLE = "▀";
-        const string CHAR_BARRIER = "▒";
+        const string CHAR_BARRIER = "▒"; 
 
         void barrier() {
             barrierL = rand() % 5 + 2; // Barrier length between 2 and 6
